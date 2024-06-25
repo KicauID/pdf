@@ -3,7 +3,7 @@
 		"kind": "column",
 		"name": "HTML to PDF",
 		"description": "Allows you to preview and save HTML as PDFs. Add a web-embed component to your layout, then select this column as the source. If you want to level-up your Glide skills for free, head to https://loqode.com 🚀",
-		"author": "Marco Volpato <marco@loqode.com>",
+		"author": "Kicau ID <kicauid.official@gmail.com>",
 		"params": [
 			{
 				"name": "html",
