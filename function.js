@@ -85,10 +85,10 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 
     const customCSS = `
     body {
-      margin: 0!important
+      margin: 0!important;
     }
 
-    button#download, button#print {
+    .button {
       position: fixed;
       border-radius: 0.5rem;
       font-size: 14px;
@@ -100,23 +100,30 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       padding: 0px 12px;
       height: 32px;
       background: #ffffff;
-      top: 8px;
-      right: 8px;
-      margin-right: 10px;
       box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
       cursor: pointer;
     }
 
-    button#download:hover, button#print:hover {
+    #download {
+      top: 8px;
+      left: 8px;
+    }
+
+    #print {
+      top: 8px;
+      right: 8px;
+    }
+
+    .button:hover {
       background: #f5f5f5;
       box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 12px -3px rgba(0, 0, 0, 0.1);
     }
 
-    button#download.downloading, button#print.printing {
+    #download.downloading, #print.printing {
       color: #ea580c;
     }
 
-    button#download.done, button#print.done {
+    #download.done, #print.done {
       color: #16a34a;
     }
 
@@ -137,8 +144,8 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     <style>${customCSS}</style>
     <div class="main">
       <div class="header">
-        <button class="button" id="download">Download</button>
-        <button class="button" id="print">Print</button>
+        <button class="button" id="download">DOWNLOAD</button>
+        <button class="button" id="print">PRINT</button>
       </div>
       <div id="content">${html}</div>
     </div>
