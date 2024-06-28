@@ -62,8 +62,8 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
         ledger: [2551, 1648],
         tabloid: [1648, 2551],
         credit_card: [319, 508],
-        thermal_58mm: [154, 1050], // Added thermal paper 58mm dimensions
-        thermal_80mm: [224, 1050], // Added thermal paper 80mm dimensions
+        thermal_58mm: [154, 1050],
+        thermal_80mm: [224, 1050],
     };
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
@@ -91,7 +91,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     }
 
     .button {
-      width: 50%; /* Each button takes half the width */
+      width: 50%;
       border-radius: 0;
       font-size: 14px;
       font-weight: 600;
@@ -145,11 +145,11 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     }
 
     .content {
-      margin-top: 40px; /* Adding margin to avoid overlap with fixed buttons */
+      margin-top: 32px; /* Adding margin to avoid overlap with fixed buttons */
     }
     `;
 
-    // HTML THAT IS RETURNED AS A RENDERABLE URL
+
     const originalHTML = `
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>${customCSS}</style>
