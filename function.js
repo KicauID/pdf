@@ -90,31 +90,29 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       margin: 0!important;
     }
 
-    button#download, button#print {
-      position: fixed;
+    .button {
+      width: 100px; /* Set the width of the buttons */
       border-radius: 0.5rem;
       font-size: 14px;
       font-weight: 600;
       line-height: 1.5rem;
-      color: #0d0d0d;
+      color: #ffffff;
       border: none;
       font-family: 'Arial';
       padding: 0px 12px;
       height: 32px;
-      background: #ffffff;
       text-transform: uppercase;
       box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
       cursor: pointer;
     }
 
     button#download {
-      bottom: 8px;
-      left: 8px;
+      background: #04A535;
+      margin-right: 10px;
     }
 
     button#print {
-      bottom: 8px;
-      right: 8px;
+      background: #0353A7;
     }
 
     button#download:hover, button#print:hover {
@@ -146,9 +144,11 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>${customCSS}</style>
     <div class="main">
+      <div style="text-align: center; margin-bottom: 10px;">
+        <button class="button" id="download">Download</button>
+        <button class="button" id="print">Print</button>
+      </div>
       <div id="content">${html}</div>
-      <button class="button" id="download">Download</button>
-      <button class="button" id="print">Print</button>
     </div>
     <script>
       document.getElementById('download').addEventListener('click', function() {
