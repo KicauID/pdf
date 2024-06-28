@@ -91,8 +91,8 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     }
 
     .button {
-      width: 100px; /* Set the width of the buttons */
-      border-radius: 0.5rem;
+      width: 50%; /* Each button takes half the width */
+      border-radius: 0;
       font-size: 14px;
       font-weight: 600;
       line-height: 1.5rem;
@@ -102,17 +102,21 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       padding: 0px 12px;
       height: 32px;
       text-transform: uppercase;
-      box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
       cursor: pointer;
+      box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
     }
 
     button#download {
       background: #04A535;
-      margin-right: 10px;
+      left: 0;
     }
 
     button#print {
       background: #0353A7;
+      right: 0;
     }
 
     button#download:hover, button#print:hover {
@@ -137,6 +141,10 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       background-color: rgb(0 0 0 / 32%);
       border-radius: 4px;
     }
+
+    .content {
+      margin-top: 40px; /* Adding margin to avoid overlap with fixed buttons */
+    }
     `;
 
     // HTML THAT IS RETURNED AS A RENDERABLE URL
@@ -144,11 +152,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>${customCSS}</style>
     <div class="main">
-      <div style="text-align: center; margin-bottom: 10px;">
-        <button class="button" id="download">Download</button>
-        <button class="button" id="print">Print</button>
-      </div>
-      <div id="content">${html}</div>
+      <button class="button" id="download">Download</button>
+      <button class="button" id="print">Print</button>
+      <div id="content" class="content">${html}</div>
     </div>
     <script>
       document.getElementById('download').addEventListener('click', function() {
