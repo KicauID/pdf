@@ -62,9 +62,11 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
         ledger: [2551, 1648],
         tabloid: [1648, 2551],
         credit_card: [319, 508],
+        thermal_58mm: [154, 1050], // Added thermal paper 58mm dimensions
+        thermal_80mm: [224, 1050], // Added thermal paper 80mm dimensions
     };
 
-    // GET FINAL DIMESIONS FROM SELECTED FORMAT
+    // GET FINAL DIMENSIONS FROM SELECTED FORMAT
     const dimensions = customDimensions || formatDimensions[format];
     const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
