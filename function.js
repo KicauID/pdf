@@ -144,9 +144,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       border-radius: 4px;
     }
 
-    .content {
-      margin-top: 32px; /* Adding margin to avoid overlap with fixed buttons */
-    }
+    
     `;
 
 
