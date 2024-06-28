@@ -121,15 +121,17 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 
     button#download:hover, button#print:hover {
       background: #f5f5f5;
-      box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 12px -3px rgba(0, 0, 0, 0.1);
+      color: #000000;
     }
 
     button#download.downloading, button#print.printing {
-      color: #ea580c;
+      background: #ffffff;
+      color: #000000;
     }
 
     button#download.done, button#print.done {
-      color: #16a34a;
+      background: #ffffff;
+      color: #000000;
     }
 
     ::-webkit-scrollbar {
@@ -160,7 +162,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       document.getElementById('download').addEventListener('click', function() {
         var element = document.getElementById('content');
         var button = this;
-        button.innerText = 'Downloading...';
+        button.innerText = 'DOWNLOADING...';
         button.className = 'downloading';
 
         var opt = {
@@ -179,7 +181,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
           }
         };
         html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-          button.innerText = 'Done 🎉';
+          button.innerText = 'DOWNLOAD DONE';
           button.className = 'done';
           setTimeout(function() { 
             button.innerText = 'Download';
@@ -191,7 +193,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       document.getElementById('print').addEventListener('click', function() {
         var element = document.getElementById('content');
         var button = this;
-        button.innerText = 'Printing...';
+        button.innerText = 'PRINTING...';
         button.className = 'printing';
 
         var opt = {
@@ -212,7 +214,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
         html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
           pdf.autoPrint();
           window.open(pdf.output('bloburl'), '_blank');
-          button.innerText = 'Done 🎉';
+          button.innerText = 'PRINT DONE';
           button.className = 'done';
           setTimeout(function() { 
             button.innerText = 'Print';
