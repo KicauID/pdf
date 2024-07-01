@@ -25,4 +25,3 @@ window.addEventListener("message", async function(event) {
   
     event.source.postMessage(response, "*");
   });
-  
