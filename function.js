@@ -55,7 +55,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
         tabloid: [1648, 2551],
         credit_card: [319, 508],
         thermal_58mm: [154, 1050],
-        thermal_80mm: [224, 1050],
+        thermal_80mm: [224, 1754],
     };
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
