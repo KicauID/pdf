@@ -1,28 +1,28 @@
-// Function to generate PDF from HTML content
-async function generatePDFFromHTML(htmlContent) {
-    return new Promise((resolve, reject) => {
-        // Konfigurasi html2pdf
-        const opt = {
-            margin: 0, // Tanpa margin
-            filename: 'output.pdf',
-            html2canvas: {
-                scale: 2 // Skala rendering untuk meningkatkan kualitas gambar jika diperlukan
-            },
-            jsPDF: {
-                unit: 'in',
-                format: [2.76, 7.42], // Format kertas untuk thermal 80mm, dalam inci (width, height)
-                orientation: 'portrait',
-                compressPDF: true // Mengompres PDF untuk ukuran file yang lebih kecil
-            }
-        };
-
-        // Menghasilkan PDF menggunakan html2pdf
-        html2pdf().set(opt).from(htmlContent).toPdf().get('pdf').then(function(pdf) {
-            // Konversi PDF ke base64 untuk dikirimkan sebagai hasil
-            pdfOutput = pdf.output('bloburl'); // Mengubah PDF menjadi URL blob
-            resolve(pdfOutput);
-        }).catch(function(error) {
-            reject(error);
-        });
-    });
-}
+window.addEventListener("message", async function(event) {
+    const { origin, data: { key, params } } = event;
+  
+    let result;
+    let error;
+    try {
+      result = await window.function(...params);
+    } catch (e) {
+      result = undefined;
+      try {
+        error = e.toString();
+      } catch (e) {
+        error = "Exception can't be stringified.";
+      }
+    }
+  
+    const response = { key };
+    if (result !== undefined) {
+      // FIXME: Remove `type` once that's in staging
+      response.result = { value: result };
+    }
+    if (error !== undefined) {
+      response.error = error;
+    }
+  
+    event.source.postMessage(response, "*");
+  });
+  
