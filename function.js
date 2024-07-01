@@ -104,24 +104,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       border-radius: 4px;
     }
 
-    /* Custom styles for thermal printers */
-    .thermal-58mm {
-      width: 154px; /* Fixed width */
-      max-width: 154px; /* Max width */
-      min-height: 100px; /* Minimum height */
-      overflow-wrap: break-word; /* Ensure words don't overflow */
-      word-wrap: break-word;
-      word-break: break-all; /* Break long words */
-    }
-
-    .thermal-80mm {
-      width: 224px; /* Fixed width */
-      max-width: 224px; /* Max width */
-      min-height: 100px; /* Minimum height */
-      overflow-wrap: break-word; /* Ensure words don't overflow */
-      word-wrap: break-word;
-      word-break: break-all; /* Break long words */
-    }
+    
     `;
 
     const originalHTML = `
