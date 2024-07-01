@@ -21,47 +21,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        a0: [4967, 7022],
-        a1: [3508, 4967],
-        a2: [2480, 3508],
-        a3: [1754, 2480],
         a4: [1240, 1754],
-        a5: [874, 1240],
-        a6: [620, 874],
-        a7: [437, 620],
-        a8: [307, 437],
-        a9: [219, 307],
-        a10: [154, 219],
-        b0: [5906, 8350],
-        b1: [4175, 5906],
-        b2: [2953, 4175],
-        b3: [2085, 2953],
-        b4: [1476, 2085],
-        b5: [1039, 1476],
-        b6: [738, 1039],
-        b7: [520, 738],
-        b8: [366, 520],
-        b9: [260, 366],
-        b10: [183, 260],
-        c0: [5415, 7659],
-        c1: [3827, 5415],
-        c2: [2705, 3827],
-        c3: [1913, 2705],
-        c4: [1352, 1913],
-        c5: [957, 1352],
-        c6: [673, 957],
-        c7: [478, 673],
-        c8: [337, 478],
-        c9: [236, 337],
-        c10: [165, 236],
-        dl: [650, 1299],
-        letter: [1276, 1648],
-        government_letter: [1199, 1577],
-        legal: [1276, 2102],
-        junior_legal: [1199, 750],
-        ledger: [2551, 1648],
-        tabloid: [1648, 2551],
-        credit_card: [319, 508],
         thermal_58mm: [154, 1050],
         thermal_80mm: [224, 1050],
     };
@@ -148,7 +108,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     .thermal-58mm {
       width: 154px; /* Fixed width */
       max-width: 154px; /* Max width */
-      min-height: 1050px; /* Minimum height */
+      min-height: 100px; /* Minimum height */
       overflow-wrap: break-word; /* Ensure words don't overflow */
       word-wrap: break-word;
       word-break: break-all; /* Break long words */
@@ -157,7 +117,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     .thermal-80mm {
       width: 224px; /* Fixed width */
       max-width: 224px; /* Max width */
-      min-height: 1050px; /* Minimum height */
+      min-height: 100px; /* Minimum height */
       overflow-wrap: break-word; /* Ensure words don't overflow */
       word-wrap: break-word;
       word-break: break-all; /* Break long words */
