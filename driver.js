@@ -1,34 +1,21 @@
-// Mengubah event listener untuk menerima pesan dan menghasilkan PDF satu halaman
-window.addEventListener("message", async function(event) {
-    const { origin, data: { key, params, htmlContent } } = event;
-
-    let pdfData;
-    let error;
+// Function to print content to Bluetooth printer
+async function printToBluetoothPrinter(content) {
     try {
-        // Generate PDF from HTML content using window.function
-        const pdfUrl = window.function(htmlContent, ...Object.values(params));
-        pdfData = await fetch(pdfUrl).then(response => response.blob());
-    } catch (e) {
-        pdfData = undefined;
-        try {
-            error = e.toString();
-        } catch (e) {
-            error = "Exception can't be stringified.";
-        }
-    }
-
-    const response = { key };
-    if (pdfData) {
-        const pdfBase64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(pdfData);
+        const device = await navigator.bluetooth.requestDevice({
+            filters: [{ services: ['printer_service'] }]
         });
-        response.result = { pdfData: pdfBase64 };
-    }
-    if (error) {
-        response.error = error;
-    }
 
-    event.source.postMessage(response, "*");
-});
+        const server = await device.gatt.connect();
+        const service = await server.getPrimaryService('printer_service');
+        const characteristic = await service.getCharacteristic('print_characteristic');
+
+        let data = new TextEncoder().encode(content);
+        await characteristic.writeValue(data);
+
+        console.log('Printed successfully');
+        alert('Printed successfully');
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to print: ' + error);
+    }
+}
