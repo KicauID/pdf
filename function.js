@@ -105,21 +105,13 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     }
 
     /* Custom styles for thermal printers */
-    .thermal-58mm {
-      width: 154px; /* Fixed width */
-      max-width: 154px; /* Max width */
-      overflow-wrap: break-word; /* Ensure words don't overflow */
-      word-wrap: break-word;
-      word-break: break-all; /* Break long words */
-    }
-
     .thermal-80mm {
       width: 224px; /* Fixed width */
       max-width: 224px; /* Max width */
-      overflow-wrap: break-word; /* Ensure words don't overflow */
+      overflow-wrap: break-word;
       word-wrap: break-word;
-      word-break: break-all; /* Break long words */
-    }
+      word-break: break-all; 
+      }
     `;
 
     const originalHTML = `
