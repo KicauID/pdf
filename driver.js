@@ -3,25 +3,26 @@ async function generatePDFFromHTML(htmlContent) {
     return new Promise((resolve, reject) => {
         // Konfigurasi html2pdf
         const opt = {
-            margin: 1,
+            margin: 0, // Tanpa margin
             filename: 'output.pdf',
             html2canvas: {
                 scale: 2 // Skala rendering untuk meningkatkan kualitas gambar jika diperlukan
             },
             jsPDF: {
                 unit: 'in',
-                format: 'letter',
-                orientation: 'portrait'
-            },
-            pagebreak: {
-                avoid: '.avoid-this-element', // Hindari pemisahan halaman pada elemen dengan kelas ini
-                before: '.page-break-before', // Pemisahan halaman sebelum elemen dengan kelas ini
-                after: '.page-break-after' // Pemisahan halaman setelah elemen dengan kelas ini
-            },
-            // Fungsi untuk menentukan apakah halaman cukup besar untuk konten atau tidak
-            html2pdf: {
-                pagebreak: {
-                    mode: ['css'],
-                    avoid: '.do_not_Break',
-                    before: '.allow-page-break-before',
-                    in customized dimensions type "even without so dimensions even what   understood.let so sure set automated else response as? do
+                format: [2.76, 7.42], // Format kertas untuk thermal 80mm, dalam inci (width, height)
+                orientation: 'portrait',
+                compressPDF: true // Mengompres PDF untuk ukuran file yang lebih kecil
+            }
+        };
+
+        // Menghasilkan PDF menggunakan html2pdf
+        html2pdf().set(opt).from(htmlContent).toPdf().get('pdf').then(function(pdf) {
+            // Konversi PDF ke base64 untuk dikirimkan sebagai hasil
+            pdfOutput = pdf.output('bloburl'); // Mengubah PDF menjadi URL blob
+            resolve(pdfOutput);
+        }).catch(function(error) {
+            reject(error);
+        });
+    });
+}
