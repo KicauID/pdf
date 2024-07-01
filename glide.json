@@ -2,6 +2,7 @@
 	{
 		"kind": "column",
 		"name": "HTML to PDF",
+		"description": "HTML to PDF",
 		"author": "Kicau ID <kicauid.official@gmail.com>",
 		"params": [
 			{
