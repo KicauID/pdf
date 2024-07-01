@@ -22,8 +22,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
         a4: [1240, 1754],
-        thermal_58mm: [154, 1050],
-        thermal_80mm: [224, 1050],
+        80mm6: [224, 700],
+        80mm9: [224, 1050],
+        80mm36: [224, 4200],
     };
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
