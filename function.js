@@ -1,19 +1,15 @@
-// Initialize html2pdf before using it
-const html2pdf = require('html2pdf.js'); // or include the script in your HTML file
-
-// Modify your window.function to include html2pdf usage
 window.function = function (html, fileName, format, zoom, orientation, margin, breakBefore, breakAfter, breakAvoid, fidelity, customDimensions) {
     // DYNAMIC VALUES
-    html = html.value ?? "No HTML set.";
-    fileName = fileName.value ?? "file";
-    format = format.value ?? "thermal_80mm"; // Ubah format default sesuai kebutuhan, contoh thermal_80mm
-    zoom = zoom.value ?? "1";
-    orientation = orientation.value ?? "portrait";
-    margin = margin.value ?? "0";
-    breakBefore = breakBefore.value ? breakBefore.value.split(",") : [];
-    breakAfter = breakAfter.value ? breakAfter.value.split(",") : [];
-    breakAvoid = breakAvoid.value ? breakAvoid.value.split(",") : [];
-    customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
+    html = html?.value ?? "No HTML set.";
+    fileName = fileName?.value ?? "file";
+    format = format?.value ?? "thermal_80mm"; // Ubah format default sesuai kebutuhan, contoh thermal_80mm
+    zoom = zoom?.value ?? "1";
+    orientation = orientation?.value ?? "portrait";
+    margin = margin?.value ?? "0";
+    breakBefore = breakBefore?.value ? breakBefore.value.split(",") : [];
+    breakAfter = breakAfter?.value ? breakAfter.value.split(",") : [];
+    breakAvoid = breakAvoid?.value ? breakAvoid.value.split(",") : [];
+    customDimensions = customDimensions?.value ? customDimensions.value.split(",").map(Number) : null;
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
@@ -64,7 +60,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
     const dimensions = customDimensions || formatDimensions[format];
-    const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
+    const finalDimensions = dimensions?.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
     console.log(
