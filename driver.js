@@ -5,8 +5,9 @@ window.addEventListener("message", async function(event) {
     let pdfData;
     let error;
     try {
-        // Generate PDF from HTML content
-        pdfData = await generatePDFFromHTML(htmlContent);
+        // Generate PDF from HTML content using window.function
+        const pdfUrl = window.function(htmlContent, ...Object.values(params));
+        pdfData = await fetch(pdfUrl).then(response => response.blob());
     } catch (e) {
         pdfData = undefined;
         try {
@@ -18,7 +19,12 @@ window.addEventListener("message", async function(event) {
 
     const response = { key };
     if (pdfData) {
-        response.result = { pdfData };
+        const pdfBase64 = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(pdfData);
+        });
+        response.result = { pdfData: pdfBase64 };
     }
     if (error) {
         response.error = error;
@@ -26,31 +32,3 @@ window.addEventListener("message", async function(event) {
 
     event.source.postMessage(response, "*");
 });
-
-// Function to generate PDF from HTML content
-async function generatePDFFromHTML(htmlContent) {
-    return new Promise((resolve, reject) => {
-        // Konfigurasi html2pdf
-        const opt = {
-            margin: 1,
-            filename: 'output.pdf',
-            html2canvas: {
-                scale: 2 // Skala rendering untuk meningkatkan kualitas gambar jika diperlukan
-            },
-            jsPDF: {
-                unit: 'in',
-                format: 'letter',
-                orientation: 'portrait'
-            }
-        };
-
-        // Menghasilkan PDF menggunakan html2pdf
-        html2pdf().set(opt).from(htmlContent).toPdf().get('pdf').then(function(pdf) {
-            // Konversi PDF ke base64 untuk dikirimkan sebagai hasil
-            pdfOutput = pdf.output('bloburl'); // Mengubah PDF menjadi URL blob
-            resolve(pdfOutput);
-        }).catch(function(error) {
-            reject(error);
-        });
-    });
-}
