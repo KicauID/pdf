@@ -104,7 +104,22 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       border-radius: 4px;
     }
 
-    
+    /* Custom styles for thermal printers */
+    .thermal-58mm {
+      width: 154px; /* Fixed width */
+      max-width: 154px; /* Max width */
+      overflow-wrap: break-word; /* Ensure words don't overflow */
+      word-wrap: break-word;
+      word-break: break-all; /* Break long words */
+    }
+
+    .thermal-80mm {
+      width: 224px; /* Fixed width */
+      max-width: 224px; /* Max width */
+      overflow-wrap: break-word; /* Ensure words don't overflow */
+      word-wrap: break-word;
+      word-break: break-all; /* Break long words */
+    }
     `;
 
     const originalHTML = `
@@ -113,14 +128,25 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     <div class="main">
       <button class="button" id="download">Download</button>
       <button class="button" id="print">Print</button>
-      <div id="content" class="content">${html}</div>
+      <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
+      function getFinalHeight() {
+        const content = document.getElementById('content');
+        const styles = window.getComputedStyle(content);
+        const marginTop = parseFloat(styles['marginTop']);
+        const marginBottom = parseFloat(styles['marginBottom']);
+        return Math.ceil(content.offsetHeight + marginTop + marginBottom);
+      }
+
       document.getElementById('download').addEventListener('click', function() {
         var element = document.getElementById('content');
         var button = this;
         button.innerText = 'DOWNLOADING...';
         button.className = 'downloading';
+
+        var finalHeight = getFinalHeight();
+        console.log('Final height:', finalHeight);
 
         var opt = {
           pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
@@ -133,7 +159,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: [${finalDimensions[0]}, finalHeight],
             hotfixes: ['px_scaling']
           }
         };
@@ -153,6 +179,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
         button.innerText = 'PRINTING...';
         button.className = 'printing';
 
+        var finalHeight = getFinalHeight();
+        console.log('Final height:', finalHeight);
+
         var opt = {
           pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
           margin: ${margin},
@@ -164,7 +193,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: [${finalDimensions[0]}, finalHeight],
             hotfixes: ['px_scaling']
           }
         };
