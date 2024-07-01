@@ -1,21 +1,27 @@
-// Function to print content to Bluetooth printer
-async function printToBluetoothPrinter(content) {
+window.addEventListener("message", async function(event) {
+    const { origin, data: { key, params } } = event;
+  
+    let result;
+    let error;
     try {
-        const device = await navigator.bluetooth.requestDevice({
-            filters: [{ services: ['printer_service'] }]
-        });
-
-        const server = await device.gatt.connect();
-        const service = await server.getPrimaryService('printer_service');
-        const characteristic = await service.getCharacteristic('print_characteristic');
-
-        let data = new TextEncoder().encode(content);
-        await characteristic.writeValue(data);
-
-        console.log('Printed successfully');
-        alert('Printed successfully');
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to print: ' + error);
+      result = await window.function(...params);
+    } catch (e) {
+      result = undefined;
+      try {
+        error = e.toString();
+      } catch (e) {
+        error = "Exception can't be stringified.";
+      }
     }
-}
+  
+    const response = { key };
+    if (result !== undefined) {
+      // FIXME: Remove `type` once that's in staging
+      response.result = { value: result };
+    }
+    if (error !== undefined) {
+      response.error = error;
+    }
+  
+    event.source.postMessage(response, "*");
+  });
