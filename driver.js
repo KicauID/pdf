@@ -1,32 +1,3 @@
-// Mengubah event listener untuk menerima pesan dan menghasilkan PDF satu halaman
-window.addEventListener("message", async function(event) {
-    const { origin, data: { key, params, htmlContent } } = event;
-
-    let pdfData;
-    let error;
-    try {
-        // Generate PDF from HTML content
-        pdfData = await generatePDFFromHTML(htmlContent);
-    } catch (e) {
-        pdfData = undefined;
-        try {
-            error = e.toString();
-        } catch (e) {
-            error = "Exception can't be stringified.";
-        }
-    }
-
-    const response = { key };
-    if (pdfData) {
-        response.result = { pdfData };
-    }
-    if (error) {
-        response.error = error;
-    }
-
-    event.source.postMessage(response, "*");
-});
-
 // Function to generate PDF from HTML content
 async function generatePDFFromHTML(htmlContent) {
     return new Promise((resolve, reject) => {
@@ -41,16 +12,16 @@ async function generatePDFFromHTML(htmlContent) {
                 unit: 'in',
                 format: 'letter',
                 orientation: 'portrait'
-            }
-        };
-
-        // Menghasilkan PDF menggunakan html2pdf
-        html2pdf().set(opt).from(htmlContent).toPdf().get('pdf').then(function(pdf) {
-            // Konversi PDF ke base64 untuk dikirimkan sebagai hasil
-            pdfOutput = pdf.output('bloburl'); // Mengubah PDF menjadi URL blob
-            resolve(pdfOutput);
-        }).catch(function(error) {
-            reject(error);
-        });
-    });
-}
+            },
+            pagebreak: {
+                avoid: '.avoid-this-element', // Hindari pemisahan halaman pada elemen dengan kelas ini
+                before: '.page-break-before', // Pemisahan halaman sebelum elemen dengan kelas ini
+                after: '.page-break-after' // Pemisahan halaman setelah elemen dengan kelas ini
+            },
+            // Fungsi untuk menentukan apakah halaman cukup besar untuk konten atau tidak
+            html2pdf: {
+                pagebreak: {
+                    mode: ['css'],
+                    avoid: '.do_not_Break',
+                    before: '.allow-page-break-before',
+                    in customized dimensions type "even without so dimensions even what   understood.let so sure set automated else response as? do
