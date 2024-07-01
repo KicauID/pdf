@@ -2,8 +2,8 @@
 	{
 		"kind": "column",
 		"name": "HTML to PDF",
-		"description": "HTML to PDF",
-		"author": "Kicau ID <kicauid.official@gmail.com>",
+		"description": "Allows you to preview and save HTML as PDFs",
+		"author": "KICAU NUSANTARA",
 		"params": [
 			{
 				"name": "html",
