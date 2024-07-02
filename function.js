@@ -21,8 +21,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        a4: [1240, 1754],
-        thermal_80mm: [224, 1050],  
+        tiket: [350, 175],
+        kejuaraan: [350, 200],
+        invoice: [350, 500],  
         
     };
 
