@@ -1,4 +1,4 @@
-window.function = function (html, fileName, format, zoom, orientation, margin, breakBefore, breakAfter, breakAvoid, fidelity, customDimensions) {
+window.function = function (html, fileName, format, zoom, orientation, margin, fidelity, customDimensions) {
     // FIDELITY MAPPING
     const fidelityMap = {
         low: 1,
@@ -8,22 +8,22 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 
     // DYNAMIC VALUES
     html = html.value ?? "No HTML set.";
-    fileName = fileName.value ?? "file";
-    format = format.value ?? "tiket"; // default ke "tiket"
-    zoom = zoom.value ?? "1";
-    orientation = orientation.value ?? "portrait";
-    margin = margin.value ?? "0";
-    breakBefore = breakBefore.value ? breakBefore.value.split(",") : [];
-    breakAfter = breakAfter.value ? breakAfter.value.split(",") : [];
-    breakAvoid = breakAvoid.value ? breakAvoid.value.split(",") : [];
-    quality = fidelityMap[fidelity.value] ?? 1.5;
-    customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
+	fileName = fileName.value ?? "file";
+	format = format.value ?? "a4";
+	zoom = zoom.value ?? "1";
+	orientation = orientation.value ?? "portrait";
+	margin = margin.value ?? "0";
+	breakBefore = breakBefore.value ? breakBefore.value.split(",") : [];
+	breakAfter = breakAfter.value ? breakAfter.value.split(",") : [];
+	breakAvoid = breakAvoid.value ? breakAvoid.value.split(",") : [];
+	quality = fidelityMap[fidelity.value] ?? 1.5;
+	customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
         tiket: [350, 175],
         kejuaraan: [350, 200],
-        invoice: [350, 500],
+        invoice: [350, 500],  
     };
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
@@ -31,19 +31,19 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
     const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
-    console.log(
-        `Filename: ${fileName}\n` +
-        `Format: ${format}\n` +
-        `Dimensions: ${dimensions}\n` +
-        `Zoom: ${zoom}\n` +
-        `Final Dimensions: ${finalDimensions}\n` +
-        `Orientation: ${orientation}\n` +
-        `Margin: ${margin}\n` +
-        `Break before: ${breakBefore}\n` +
-        `Break after: ${breakAfter}\n` +
-        `Break avoid: ${breakAvoid}\n` +
-        `Quality: ${quality}`
-    );
+	console.log(
+		`Filename: ${fileName}\n` +
+			`Format: ${format}\n` +
+			`Dimensions: ${dimensions}\n` +
+			`Zoom: ${zoom}\n` +
+			`Final Dimensions: ${finalDimensions}\n` +
+			`Orientation: ${orientation}\n` +
+			`Margin: ${margin}\n` +
+			`Break before: ${breakBefore}\n` +
+			`Break after: ${breakAfter}\n` +
+			`Break avoid: ${breakAvoid}\n` +
+			`Quality: ${quality}`
+	);
 
     const customCSS = `
     body {
@@ -103,6 +103,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       background-color: rgb(0 0 0 / 32%);
       border-radius: 4px;
     }
+
    `;
 
     const originalHTML = `
@@ -114,25 +115,13 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
-      function getFinalHeight() {
-        const content = document.getElementById('content');
-        const styles = window.getComputedStyle(content);
-        const marginTop = parseFloat(styles['marginTop']);
-        const marginBottom = parseFloat(styles['marginBottom']);
-        return Math.ceil(content.offsetHeight + marginTop + marginBottom);
-      }
-
       document.getElementById('download').addEventListener('click', function() {
         var element = document.getElementById('content');
         var button = this;
         button.innerText = 'DOWNLOADING...';
         button.className = 'downloading';
 
-        var finalHeight = getFinalHeight();
-        console.log('Final height:', finalHeight);
-
         var opt = {
-          pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
           margin: ${margin},
           filename: '${fileName}',
           html2canvas: {
@@ -142,7 +131,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions[0]}, finalHeight],
+            format: [${finalDimensions}],
             hotfixes: ['px_scaling']
           }
         };
@@ -162,23 +151,20 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
         button.innerText = 'PRINTING...';
         button.className = 'printing';
 
-        var finalHeight = getFinalHeight();
-        console.log('Final height:', finalHeight);
-
         var opt = {
-          pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
-          margin: ${margin},
-          filename: '${fileName}',
-          html2canvas: {
-            useCORS: true,
-            scale: ${quality}
-          },
-          jsPDF: {
-            unit: 'px',
-            orientation: '${orientation}',
-            format: [${finalDimensions[0]}, finalHeight],
-            hotfixes: ['px_scaling']
-          }
+		pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
+		margin: ${margin},
+		filename: '${fileName}',
+		html2canvas: {
+		  useCORS: true,
+		  scale: ${quality}
+		},
+		jsPDF: {
+		  unit: 'px',
+		  orientation: '${orientation}',
+		  format: [${finalDimensions}],
+		  hotfixes: ['px_scaling']
+		}
         };
         html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
           pdf.autoPrint();
