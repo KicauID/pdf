@@ -4,6 +4,8 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         low: 1,
         standard: 1.5,
         high: 2,
+        veryHigh: 3, // Tambahkan nilai fidelity lebih tinggi
+        ultra: 4 // Tambahkan nilai fidelity lebih tinggi lagi
     };
 
     // DYNAMIC VALUES
@@ -13,7 +15,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
-    quality = fidelityMap[fidelity.value] ?? 1.5;
+    const quality = fidelityMap[fidelity.value] ?? 1.5;
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
     // DOCUMENT DIMENSIONS
@@ -100,7 +102,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
       background-color: rgb(0 0 0 / 32%);
       border-radius: 4px;
     }
-
    `;
 
     const originalHTML = `
