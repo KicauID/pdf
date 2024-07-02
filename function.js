@@ -18,9 +18,10 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
+        tiket0: [250, 175],
         tiket: [350, 175],
-        tiket1: [500, 175],
-        tiket2: [800, 175],
+        tiket1: [450, 175],
+        tiket2: [600, 175],
         kejuaraan: [350, 200],
         invoice: [350, 500],
     };
