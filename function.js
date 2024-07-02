@@ -105,15 +105,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
       border-radius: 4px;
     }
 
-    /* Custom styles for thermal printers */
-    .thermal-80mm {
-      width: 224px; /* Fixed width */
-      max-width: 224px; /* Max width */
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      word-break: break-all; 
-      }
-    `;
+   `;
 
     const originalHTML = `
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
