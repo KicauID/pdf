@@ -17,7 +17,7 @@
             },
             {
                 "name": "format",
-                "displayName": "Format (thermal_58mm, thermal_80mm, etc)",
+                "displayName": "Format (tiket, kejuaraan, invoice)",
                 "type": "string"
             },
             {
