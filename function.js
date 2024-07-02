@@ -9,7 +9,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     // DYNAMIC VALUES
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
-    format = format.value ?? "a4";
+    format = format.value ?? "tiket";
     zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
