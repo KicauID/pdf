@@ -1,4 +1,4 @@
-window.function = function (html, fileName, format, zoom, orientation, margin, fidelity, customDimensions) {
+window.function = function (html, fileName, format, zoom, orientation, margin, breakBefore, breakAfter, breakAvoid, fidelity, customDimensions) {
     // FIDELITY MAPPING
     const fidelityMap = {
         low: 1,
@@ -74,7 +74,10 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         `Final Dimensions: ${finalDimensions}\n` +
         `Orientation: ${orientation}\n` +
         `Margin: ${margin}\n` +
-        `Fidelity: ${fidelity}`
+        `Fidelity: ${fidelity}\n` +
+        `Break before: ${breakBefore}\n` +
+        `Break after: ${breakAfter}\n` +
+        `Break avoid: ${breakAvoid}`
     );
 
     const customCSS = `
