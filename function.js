@@ -1,4 +1,4 @@
-window.function = function (html, fileName, format, zoom, orientation, margin, fidelity, customDimensions) {
+window.function = function (html, fileName, format, zoom, orientation, margin, breakBefore, breakAfter, breakAvoid, fidelity, customDimensions) {
     // FIDELITY MAPPING
     const fidelityMap = {
         low: 1,
@@ -9,10 +9,13 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     // DYNAMIC VALUES
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
-    format = format.value ?? "a4";
+    format = format.value ?? "tiket"; // default ke "tiket"
     zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
+    breakBefore = breakBefore.value ? breakBefore.value.split(",") : [];
+    breakAfter = breakAfter.value ? breakAfter.value.split(",") : [];
+    breakAvoid = breakAvoid.value ? breakAvoid.value.split(",") : [];
     quality = fidelityMap[fidelity.value] ?? 1.5;
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
@@ -20,7 +23,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     const formatDimensions = {
         tiket: [350, 175],
         kejuaraan: [350, 200],
-        invoice: [350, 500],  
+        invoice: [350, 500],
     };
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
@@ -36,6 +39,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         `Final Dimensions: ${finalDimensions}\n` +
         `Orientation: ${orientation}\n` +
         `Margin: ${margin}\n` +
+        `Break before: ${breakBefore}\n` +
+        `Break after: ${breakAfter}\n` +
+        `Break avoid: ${breakAvoid}\n` +
         `Quality: ${quality}`
     );
 
@@ -97,7 +103,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
       background-color: rgb(0 0 0 / 32%);
       border-radius: 4px;
     }
-
    `;
 
     const originalHTML = `
@@ -109,13 +114,25 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
       <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
+      function getFinalHeight() {
+        const content = document.getElementById('content');
+        const styles = window.getComputedStyle(content);
+        const marginTop = parseFloat(styles['marginTop']);
+        const marginBottom = parseFloat(styles['marginBottom']);
+        return Math.ceil(content.offsetHeight + marginTop + marginBottom);
+      }
+
       document.getElementById('download').addEventListener('click', function() {
         var element = document.getElementById('content');
         var button = this;
         button.innerText = 'DOWNLOADING...';
         button.className = 'downloading';
 
+        var finalHeight = getFinalHeight();
+        console.log('Final height:', finalHeight);
+
         var opt = {
+          pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
           margin: ${margin},
           filename: '${fileName}',
           html2canvas: {
@@ -125,7 +142,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: [${finalDimensions[0]}, finalHeight],
             hotfixes: ['px_scaling']
           }
         };
@@ -145,7 +162,11 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         button.innerText = 'PRINTING...';
         button.className = 'printing';
 
+        var finalHeight = getFinalHeight();
+        console.log('Final height:', finalHeight);
+
         var opt = {
+          pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
           margin: ${margin},
           filename: '${fileName}',
           html2canvas: {
@@ -155,7 +176,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: [${finalDimensions[0]}, finalHeight],
             hotfixes: ['px_scaling']
           }
         };
