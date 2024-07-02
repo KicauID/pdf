@@ -57,7 +57,7 @@
             },
             {
                 "name": "customDimensions",
-                "displayName": "Custom Dimensions (e.g: 300,300)",
+                "displayName": "Custom Dimensions (e.g: 350,175)",
                 "type": "string"
             }
         ],
