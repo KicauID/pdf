@@ -17,7 +17,7 @@
             },
             {
                 "name": "format",
-                "displayName": "Format (tiket, kejuaraan, invoice)",
+                "displayName": "Format (credit_card, b8)",
                 "type": "string"
             },
             {
@@ -57,7 +57,7 @@
             },
             {
                 "name": "customDimensions",
-                "displayName": "Custom Dimensions (e.g: 350,175)",
+                "displayName": "Custom Dimensions (e.g: 350,350)",
                 "type": "string"
             }
         ],
