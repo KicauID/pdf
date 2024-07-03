@@ -20,9 +20,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        tiket: [350, 175], // 2:1
-        tiket1: [175, 350], // 1:2
-        kejuaraan: [350, 200],
+        tiket: [350, 350],
         invoice: [350, 500],
     };
 
@@ -101,27 +99,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
       border-radius: 4px;
     }
 
-    .thermal-tiket {
-      width: 350px;
-      height: 175px;
-    }
-
-    .thermal-tiket1 {
-      width: 175px;
-      height: 350px;
-    }
-
-    .thermal-kejuaraan {
-      width: 350px;
-      height: 200px;
-    }
-
-    .thermal-invoice {
-      width: 350px;
-      height: 500px;
-    }
-
-    /* Add more CSS rules for other formats if needed */
    `;
 
     const originalHTML = `
