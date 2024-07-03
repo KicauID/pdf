@@ -8,7 +8,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         ultra: 4
     };
 
-    // DYNAMIC VALUES
+
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
     format = format.value ?? "tiket";
@@ -18,14 +18,15 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     const quality = fidelityMap[fidelity.value] ?? 4;
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
-    // DOCUMENT DIMENSIONS
+
     const formatDimensions = {
-        tiket: [350, 175],
+        tiket: [350, 350],
         invoice: [350, 500],
     };
 
-    // GET FINAL DIMENSIONS FROM SELECTED FORMAT
+
     const dimensions = customDimensions || formatDimensions[format];
+    const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
     console.log(
@@ -33,7 +34,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         `Format: ${format}\n` +
         `Dimensions: ${dimensions}\n` +
         `Zoom: ${zoom}\n` +
-        `Final Dimensions: ${dimensions}\n` + // No scaling applied here
+        `Final Dimensions: ${finalDimensions}\n` +
         `Orientation: ${orientation}\n` +
         `Margin: ${margin}\n` +
         `Quality: ${quality}`
@@ -125,7 +126,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${dimensions}],
+            format: [${finalDimensions}],
             hotfixes: ['px_scaling']
           }
         };
@@ -155,7 +156,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${dimensions}],
+            format: [${finalDimensions}],
             hotfixes: ['px_scaling']
           }
         };
