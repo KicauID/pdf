@@ -101,6 +101,28 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
       background-color: rgb(0 0 0 / 32%);
       border-radius: 4px;
     }
+
+    .thermal-tiket {
+      width: 350px;
+      height: 175px;
+    }
+
+    .thermal-tiket1 {
+      width: 175px;
+      height: 350px;
+    }
+
+    .thermal-kejuaraan {
+      width: 350px;
+      height: 200px;
+    }
+
+    .thermal-invoice {
+      width: 350px;
+      height: 500px;
+    }
+
+    /* Add more CSS rules for other formats if needed */
    `;
 
     const originalHTML = `
