@@ -20,13 +20,12 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        tiket: [350, 350],
+        tiket: [350, 175],
         invoice: [350, 500],
     };
 
     // GET FINAL DIMENSIONS FROM SELECTED FORMAT
     const dimensions = customDimensions || formatDimensions[format];
-    const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
     console.log(
@@ -34,7 +33,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         `Format: ${format}\n` +
         `Dimensions: ${dimensions}\n` +
         `Zoom: ${zoom}\n` +
-        `Final Dimensions: ${finalDimensions}\n` +
+        `Final Dimensions: ${dimensions}\n` + // No scaling applied here
         `Orientation: ${orientation}\n` +
         `Margin: ${margin}\n` +
         `Quality: ${quality}`
@@ -126,7 +125,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: [${dimensions}],
             hotfixes: ['px_scaling']
           }
         };
@@ -156,7 +155,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: [${dimensions}],
             hotfixes: ['px_scaling']
           }
         };
