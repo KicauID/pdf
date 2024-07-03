@@ -12,7 +12,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
     format = format.value ?? "tiket";
-    zoom = zoom.value ?? "0";
+    zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
     const quality = fidelityMap[fidelity.value] ?? 4;
@@ -20,7 +20,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        tiket: [350, 175],
+        tiket: [350, 150],
         kejuaraan: [350, 200],
         invoice: [350, 500],
     };
