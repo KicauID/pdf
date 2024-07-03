@@ -4,26 +4,23 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         low: 1,
         standard: 1.5,
         high: 2,
-        veryHigh: 3, // Tambahkan nilai fidelity lebih tinggi
-        ultra: 4 // Tambahkan nilai fidelity lebih tinggi lagi
+        veryHigh: 3,
+        ultra: 4
     };
 
     // DYNAMIC VALUES
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
     format = format.value ?? "tiket";
-    zoom = zoom.value ?? "1";
+    zoom = zoom.value ?? "0";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
-    const quality = fidelityMap[fidelity.value] ?? 1.5;
+    const quality = fidelityMap[fidelity.value] ?? 4;
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        tiket0: [250, 175],
         tiket: [350, 175],
-        tiket1: [450, 175],
-        tiket2: [600, 175],
         kejuaraan: [350, 200],
         invoice: [350, 500],
     };
