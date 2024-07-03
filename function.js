@@ -20,8 +20,8 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     // DOCUMENT DIMENSIONS
     const formatDimensions = {
-        tiket: [150, 150],
-        kejuaraan: [200, 350],
+        tiket: [350, 50],
+        kejuaraan: [350, 350],
         invoice: [350, 500],
     };
 
