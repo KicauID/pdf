@@ -8,22 +8,53 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         ultra: 4
     };
 
-
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
-    format = format.value ?? "tiket";
+    format = format.value ?? "invoice";
     zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
     const quality = fidelityMap[fidelity.value] ?? 4;
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
-
     const formatDimensions = {
-        tiket: [350, 350],
+        2: [350, 350],
+        3: [350, 525],
+        4: [350, 700],
+        5: [350, 875],
+        6: [350, 1050],
+        7: [350, 1225],
+        8: [350, 1400],
+        9: [350, 1575],
+        10: [350, 1750],
+        11: [350, 1925],
+        12: [350, 2100],
+        13: [350, 2275],
+        14: [350, 2450],
+        15: [350, 2625],
+        16: [350, 2800],
+        17: [350, 2975],
+        18: [350, 3150],
+        19: [350, 3325],
+        20: [350, 3500],
+        21: [350, 3675],
+        22: [350, 3850],
+        23: [350, 4025],
+        24: [350, 4200],
+        25: [350, 4375],
+        26: [350, 4550],
+        27: [350, 4725],
+        28: [350, 4900],
+        29: [350, 5075],
+        30: [350, 5250],
+        31: [350, 5425],
+        32: [350, 5600],
+        33: [350, 5775],
+        34: [350, 5950],
+        35: [350, 6125],
+        36: [350, 6300],
         invoice: [350, 700],
     };
-
 
     const dimensions = customDimensions || formatDimensions[format];
     const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
@@ -110,12 +141,21 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
       <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
+      function adjustDimensions() {
+        var contentElement = document.getElementById('content');
+        var contentHeight = contentElement.scrollHeight;
+        var contentWidth = contentElement.scrollWidth;
+        var adjustedDimensions = [contentWidth, contentHeight];
+        return adjustedDimensions;
+      }
+
       document.getElementById('download').addEventListener('click', function() {
         var element = document.getElementById('content');
         var button = this;
         button.innerText = 'DOWNLOADING...';
         button.className = 'downloading';
 
+        var adjustedDimensions = adjustDimensions();
         var opt = {
           margin: ${margin},
           filename: '${fileName}',
@@ -126,7 +166,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: adjustedDimensions,
             hotfixes: ['px_scaling']
           }
         };
@@ -146,6 +186,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         button.innerText = 'PRINTING...';
         button.className = 'printing';
 
+        var adjustedDimensions = adjustDimensions();
         var opt = {
           margin: ${margin},
           filename: '${fileName}',
@@ -156,7 +197,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
           jsPDF: {
             unit: 'px',
             orientation: '${orientation}',
-            format: [${finalDimensions}],
+            format: adjustedDimensions,
             hotfixes: ['px_scaling']
           }
         };
