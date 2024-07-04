@@ -21,7 +21,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     const formatDimensions = {
         tiket: [350, 350],
-        invoice: [350, 500],
+        invoice: [350, 700],
     };
 
 
