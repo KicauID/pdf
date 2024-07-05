@@ -10,7 +10,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
 
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
-    format = format.value ?? "invoice";
+    format = format.value ?? "3";
     zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
@@ -53,8 +53,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         34: [350, 5950],
         35: [350, 6125],
         36: [350, 6300],
-        invoice: [350, 700],
-    };
+        };
 
     const dimensions = customDimensions || formatDimensions[format];
     const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
