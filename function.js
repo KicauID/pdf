@@ -77,7 +77,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     }
 
     .button {
-        width: 50%;
+        width: 100%;
         border-radius: 0;
         font-size: 14px;
         font-weight: 600;
@@ -93,29 +93,20 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         position: fixed;
         top: 0;
         z-index: 1000;
-    }
-
-    button#download {
-        background: #04A535;
-        left: 0;
-    }
-
-    button#print {
         background: #0353A7;
-        right: 0;
     }
 
-    button#download:hover, button#print:hover {
+    .button:hover {
         background: #f5f5f5;
         color: #000000;
     }
 
-    button#download.downloading, button#print.printing {
+    .button.printing {
         background: #ffffff;
         color: #000000;
     }
 
-    button#download.done, button#print.done {
+    .button.done {
         background: #ffffff;
         color: #000000;
     }
@@ -135,7 +126,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>${customCSS}</style>
     <div class="main">
-        <button class="button" id="download">Download</button>
         <button class="button" id="print">Print</button>
         <div id="content" class="content thermal-${format}">${html}</div>
     </div>
@@ -147,37 +137,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
             var adjustedDimensions = ['${format}' === 'invoice' ? 350 : contentWidth, '${format}' === 'invoice' ? 600 : contentHeight];
             return adjustedDimensions;
         }
-
-        document.getElementById('download').addEventListener('click', function() {
-            var element = document.getElementById('content');
-            var button = this;
-            button.innerText = 'DOWNLOADING...';
-            button.className = 'downloading';
-
-            var adjustedDimensions = adjustDimensions();
-            var opt = {
-                margin: ${margin},
-                filename: '${fileName}',
-                html2canvas: {
-                    useCORS: true,
-                    scale: ${quality}
-                },
-                jsPDF: {
-                    unit: 'px',
-                    orientation: '${orientation}',
-                    format: adjustedDimensions,
-                    hotfixes: ['px_scaling']
-                }
-            };
-            html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-                button.innerText = 'DOWNLOAD DONE';
-                button.className = 'done';
-                setTimeout(function() { 
-                    button.innerText = 'Download';
-                    button.className = ''; 
-                }, 2000);
-            }).save();
-        });
 
         document.getElementById('print').addEventListener('click', function() {
             var element = document.getElementById('content');
