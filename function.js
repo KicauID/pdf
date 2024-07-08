@@ -18,6 +18,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
     const formatDimensions = {
+        1: [350, 175],
         2: [350, 350],
         3: [350, 525],
         4: [350, 700],
@@ -56,7 +57,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         invoice: [350, 600],
     };
 
-    const dimensions = customDimensions || formatDimensions[format];
+    const dimensions = formatDimensions[format];
     const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
