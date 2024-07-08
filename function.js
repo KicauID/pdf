@@ -1,4 +1,4 @@
-window.function = function (html, fileName, width, height, zoom, orientation, margin, fidelity) {
+window.function = function (html, fileName, format, zoom, orientation, margin, fidelity, customDimensions) {
     // FIDELITY MAPPING
     const fidelityMap = {
         low: 1,
@@ -10,24 +10,63 @@ window.function = function (html, fileName, width, height, zoom, orientation, ma
 
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
-    width = parseInt(width.value) ?? 350;
-    height = parseInt(height.value) ?? 175;
+    format = format.value ?? "3";
     zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
     margin = margin.value ?? "0";
     const quality = fidelityMap[fidelity.value] ?? 4;
+    customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
-    const finalWidth = Math.round(width / zoom);
-    const finalHeight = Math.round(height / zoom);
+    const formatDimensions = {
+        1: [350, 175],
+        2: [350, 350],
+        3: [350, 525],
+        4: [350, 700],
+        5: [350, 875],
+        6: [350, 1050],
+        7: [350, 1225],
+        8: [350, 1400],
+        9: [350, 1575],
+        10: [350, 1750],
+        11: [350, 1925],
+        12: [350, 2100],
+        13: [350, 2275],
+        14: [350, 2450],
+        15: [350, 2625],
+        16: [350, 2800],
+        17: [350, 2975],
+        18: [350, 3150],
+        19: [350, 3325],
+        20: [350, 3500],
+        21: [350, 3675],
+        22: [350, 3850],
+        23: [350, 4025],
+        24: [350, 4200],
+        25: [350, 4375],
+        26: [350, 4550],
+        27: [350, 4725],
+        28: [350, 4900],
+        29: [350, 5075],
+        30: [350, 5250],
+        31: [350, 5425],
+        32: [350, 5600],
+        33: [350, 5775],
+        34: [350, 5950],
+        35: [350, 6125],
+        36: [350, 6300],
+        invoice: [350, 600],
+    };
+
+    const dimensions = customDimensions || formatDimensions[format];
+    const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
     console.log(
         `Filename: ${fileName}\n` +
-        `Width: ${width}\n` +
-        `Height: ${height}\n` +
+        `Format: ${format}\n` +
+        `Dimensions: ${dimensions}\n` +
         `Zoom: ${zoom}\n` +
-        `Final Width: ${finalWidth}\n` +
-        `Final Height: ${finalHeight}\n` +
+        `Final Dimensions: ${finalDimensions}\n` +
         `Orientation: ${orientation}\n` +
         `Margin: ${margin}\n` +
         `Quality: ${quality}`
@@ -89,7 +128,7 @@ window.function = function (html, fileName, width, height, zoom, orientation, ma
     <style>${customCSS}</style>
     <div class="main">
         <button class="button" id="print">Print</button>
-        <div id="content" class="content">${html}</div>
+        <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
         document.getElementById('print').addEventListener('click', function() {
@@ -108,7 +147,7 @@ window.function = function (html, fileName, width, height, zoom, orientation, ma
                 jsPDF: {
                     unit: 'px',
                     orientation: '${orientation}',
-                    format: [${finalWidth}, ${finalHeight}],
+                    format: [${finalDimensions[0]}, ${finalDimensions[1]}],
                     hotfixes: ['px_scaling']
                 }
             };
