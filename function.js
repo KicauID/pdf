@@ -18,7 +18,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
     const formatDimensions = {
-        1: [350, 275],
+        1: [350, 350],
         2: [350, 350],
         3: [350, 525],
         4: [350, 700],
