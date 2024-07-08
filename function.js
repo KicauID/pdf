@@ -57,7 +57,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         invoice: [350, 600],
     };
 
-    const dimensions = formatDimensions[format];
+    const dimensions = customDimensions || formatDimensions[format];
     const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
 
     // LOG SETTINGS TO CONSOLE
@@ -131,21 +131,12 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
-        function adjustDimensions() {
-            var contentElement = document.getElementById('content');
-            var contentHeight = contentElement.scrollHeight;
-            var contentWidth = contentElement.scrollWidth;
-            var adjustedDimensions = ['${format}' === 'invoice' ? 350 : contentWidth, '${format}' === 'invoice' ? 600 : contentHeight];
-            return adjustedDimensions;
-        }
-
         document.getElementById('print').addEventListener('click', function() {
             var element = document.getElementById('content');
             var button = this;
             button.innerText = 'PRINTING...';
             button.className = 'printing';
 
-            var adjustedDimensions = adjustDimensions();
             var opt = {
                 margin: ${margin},
                 filename: '${fileName}',
@@ -156,7 +147,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
                 jsPDF: {
                     unit: 'px',
                     orientation: '${orientation}',
-                    format: adjustedDimensions,
+                    format: [${finalDimensions[0]}, ${finalDimensions[1]}],
                     hotfixes: ['px_scaling']
                 }
             };
