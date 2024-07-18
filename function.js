@@ -54,7 +54,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         34: [350, 5950],
         35: [350, 6125],
         36: [350, 6300],
-        invoice: [350, 600],
+        invoice: [350, 650],
     };
 
     const dimensions = customDimensions || formatDimensions[format];
