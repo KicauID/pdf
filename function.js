@@ -54,7 +54,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         34: [350, 5950],
         35: [350, 6125],
         36: [350, 6300],
-        invoice: [350, 794],
+        invoice: [350, 600],
         A6: [350, 495],
         A4: [794, 1123],
     };
