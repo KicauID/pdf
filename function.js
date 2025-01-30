@@ -79,40 +79,42 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
-    document.getElementById('print').addEventListener('click', function() {
-        var element = document.getElementById('content');
-        var button = this;
-        button.innerText = 'PRINTING...';
-        button.className = 'printing';
+   document.getElementById('print').addEventListener('click', function() {
+    var element = document.getElementById('content');
+    var button = this;
+    button.innerText = 'PRINTING...';
+    button.className = 'printing';
 
-        var calculatedHeight = element.scrollHeight || 1000; // Default tinggi jika tidak bisa dihitung
+    var width = ${finalDimensions[0]};
+    var height = element.scrollHeight || 1000; // Hitung tinggi konten, gunakan 1000px jika tidak tersedia
 
-        var opt = {
-            margin: ${margin},
-            filename: '${fileName}',
-            html2canvas: {
-                useCORS: true,
-                scale: ${quality}
-            },
-            jsPDF: {
-                unit: 'px',
-                orientation: '${orientation}',
-                format: [${width}, ${height || calculatedHeight}],
-                hotfixes: ['px_scaling']
-            }
-        };
+    var opt = {
+        margin: ${margin},
+        filename: '${fileName}',
+        html2canvas: {
+            useCORS: true,
+            scale: ${quality}
+        },
+        jsPDF: {
+            unit: 'px',
+            orientation: '${orientation}',
+            format: [width, height], // Gunakan tinggi yang dihitung
+            hotfixes: ['px_scaling']
+        }
+    };
 
-        html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-            pdf.autoPrint();
-            window.open(pdf.output('bloburl'), '_blank');
-            button.innerText = 'PRINT DONE';
-            button.className = 'done';
-            setTimeout(function() { 
-                button.innerText = 'Print';
-                button.className = ''; 
-            }, 2000);
-        });
+    html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
+        pdf.autoPrint();
+        window.open(pdf.output('bloburl'), '_blank');
+        button.innerText = 'PRINT DONE';
+        button.className = 'done';
+        setTimeout(function() { 
+            button.innerText = 'Print';
+            button.className = ''; 
+        }, 2000);
     });
+});
+
     </script>
     `;
 
