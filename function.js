@@ -11,9 +11,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     html = html.value ?? "No HTML set.";
     fileName = fileName.value ?? "file";
     format = format.value ?? "3";
-    zoom = parseFloat(zoom.value) ?? 1;
+    zoom = zoom.value ?? "1";
     orientation = orientation.value ?? "portrait";
-    margin = parseFloat(margin.value) ?? 0;
+    margin = margin.value ?? "0";
     const quality = fidelityMap[fidelity.value] ?? 4;
     customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
 
@@ -23,7 +23,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         3: [350, 1050],
         4: [350, 1400],
         5: [350, 1750],
-        6: [350, 2100],
         6: [350, 2100],
         7: [350, 2450],
         8: [350, 2800],
@@ -55,19 +54,74 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         34: [350, 11900],
         35: [350, 12250],
         36: [350, 12600],
-        tiket: [350, "auto"],
-        invoice: [350, "auto"],
+        invoice: [350, 650],
         A6: [350, 495],
         A4: [1240, 1754],
     };
 
-    let dimensions = customDimensions || formatDimensions[format] || [350, 1050];
-    let width = dimensions[0];
-    let height = dimensions[1] === "auto" ? null : Math.round(dimensions[1] / zoom);
+    const dimensions = customDimensions || formatDimensions[format];
+    const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
+
+    // LOG SETTINGS TO CONSOLE
+    console.log(
+        `Filename: ${fileName}\n` +
+        `Format: ${format}\n` +
+        `Dimensions: ${dimensions}\n` +
+        `Zoom: ${zoom}\n` +
+        `Final Dimensions: ${finalDimensions}\n` +
+        `Orientation: ${orientation}\n` +
+        `Margin: ${margin}\n` +
+        `Quality: ${quality}`
+    );
 
     const customCSS = `
     body {
         margin: 0!important;
+    }
+
+    .button {
+        width: 100%;
+        border-radius: 0;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5rem;
+        color: #ffffff;
+        border: none;
+        font-family: 'Arial';
+        padding: 0px 12px;
+        height: 32px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+        background: #0353A7;
+    }
+
+    .button:hover {
+        background: #f5f5f5;
+        color: #000000;
+    }
+
+    .button.printing {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    .button.done {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        background-color: rgb(0 0 0 / 8%);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(0 0 0 / 32%);
+        border-radius: 4px;
     }
     `;
 
@@ -79,45 +133,39 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
-   document.getElementById('print').addEventListener('click', function() {
-    var element = document.getElementById('content');
-    var button = this;
-    button.innerText = 'PRINTING...';
-    button.className = 'printing';
+        document.getElementById('print').addEventListener('click', function() {
+            var element = document.getElementById('content');
+            var button = this;
+            button.innerText = 'PRINTING...';
+            button.className = 'printing';
 
-    var width = ${finalDimensions[0]};
-    var height = element.scrollHeight || 1000; // Hitung tinggi konten, gunakan 1000px jika tidak tersedia
-
-    var opt = {
-        margin: ${margin},
-        filename: '${fileName}',
-        html2canvas: {
-            useCORS: true,
-            scale: ${quality}
-        },
-        jsPDF: {
-            unit: 'px',
-            orientation: '${orientation}',
-            format: [width, height], // Gunakan tinggi yang dihitung
-            hotfixes: ['px_scaling']
-        }
-    };
-
-    html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-        pdf.autoPrint();
-        window.open(pdf.output('bloburl'), '_blank');
-        button.innerText = 'PRINT DONE';
-        button.className = 'done';
-        setTimeout(function() { 
-            button.innerText = 'Print';
-            button.className = ''; 
-        }, 2000);
-    });
-});
-
+            var opt = {
+                margin: ${margin},
+                filename: '${fileName}',
+                html2canvas: {
+                    useCORS: true,
+                    scale: ${quality}
+                },
+                jsPDF: {
+                    unit: 'px',
+                    orientation: '${orientation}',
+                    format: [${finalDimensions[0]}, ${finalDimensions[1]}],
+                    hotfixes: ['px_scaling']
+                }
+            };
+            html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
+                pdf.autoPrint();
+                window.open(pdf.output('bloburl'), '_blank');
+                button.innerText = 'PRINT DONE';
+                button.className = 'done';
+                setTimeout(function() { 
+                    button.innerText = 'Print';
+                    button.className = ''; 
+                }, 2000);
+            });
+        });
     </script>
     `;
-
     var encodedHtml = encodeURIComponent(originalHTML);
     return "data:text/html;charset=utf-8," + encodedHtml;
 };
