@@ -61,7 +61,12 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
     };
 
     const dimensions = customDimensions || formatDimensions[format];
-    const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
+   
+    if (format === "invoice") {
+        dimensions = [350, "auto"];
+    }
+
+    const finalDimensions = dimensions.map((dimension) => (dimension === "auto" ? "auto" : Math.round(dimension / zoom)));
 
     // LOG SETTINGS TO CONSOLE
     console.log(
