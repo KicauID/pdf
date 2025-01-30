@@ -139,37 +139,43 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         <div id="content" class="content thermal-${format}">${html}</div>
     </div>
     <script>
-        document.getElementById('print').addEventListener('click', function() {
-            var element = document.getElementById('content');
-            var button = this;
-            button.innerText = 'PRINTING...';
-            button.className = 'printing';
 
-            var opt = {
-                margin: ${margin},
-                filename: '${fileName}',
-                html2canvas: {
-                    useCORS: true,
-                    scale: ${quality}
-                },
-                jsPDF: {
-                    unit: 'px',
-                    orientation: '${orientation}',
-                    format: [${finalDimensions[0]}, ${finalDimensions[1]}],
-                    hotfixes: ['px_scaling']
-                }
-            };
-            html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-                pdf.autoPrint();
-                window.open(pdf.output('bloburl'), '_blank');
-                button.innerText = 'PRINT DONE';
-                button.className = 'done';
-                setTimeout(function() { 
-                    button.innerText = 'Print';
-                    button.className = ''; 
-                }, 2000);
-            });
-        });
+document.getElementById('print').addEventListener('click', function() {
+    var element = document.getElementById('content');
+    var button = this;
+    button.innerText = 'PRINTING...';
+    button.className = 'printing';
+
+    var width = ${finalDimensions[0]};
+    var height = element.scrollHeight; // Menggunakan tinggi aktual konten
+
+    var opt = {
+        margin: ${margin},
+        filename: '${fileName}',
+        html2canvas: {
+            useCORS: true,
+            scale: ${quality}
+        },
+        jsPDF: {
+            unit: 'px',
+            orientation: '${orientation}',
+            format: [width, height], // Gunakan tinggi dinamis
+            hotfixes: ['px_scaling']
+        }
+    };
+
+    html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
+        pdf.autoPrint();
+        window.open(pdf.output('bloburl'), '_blank');
+        button.innerText = 'PRINT DONE';
+        button.className = 'done';
+        setTimeout(function() { 
+            button.innerText = 'Print';
+            button.className = ''; 
+        }, 2000);
+    });
+});
+
     </script>
     `;
     var encodedHtml = encodeURIComponent(originalHTML);
