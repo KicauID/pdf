@@ -12,7 +12,7 @@
       },
       {
         "name": "format",
-        "displayName": "Format (3, A4, A6, invoice)",
+        "displayName": "Format (1, A4, A6, invoice)",
         "type": "string"
       }
     ],
