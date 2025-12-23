@@ -107,40 +107,34 @@ window.function = function (html, fileName, format, zoom, orientation, margin, f
         margin: 0!important;
     }
 
-    .button {
+      .button {
         width: 100%;
+        height: 32px;
         border-radius: 0;
         font-size: 14px;
         font-weight: 600;
-        line-height: 1.5rem;
+        line-height: 32px;
         color: #ffffff;
         border: none;
-        font-family: 'Arial';
-        padding: 0px 12px;
-        height: 32px;
+        padding: 0 12px;
         text-transform: uppercase;
         cursor: pointer;
         box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
         position: fixed;
         top: 0;
+        left: 0;
         z-index: 1000;
         background: #0353A7;
-    }
-
-    .button:hover {
+      }
+      .button:hover {
         background: #f5f5f5;
         color: #000000;
-    }
-
-    .button.printing {
+      }
+      .button.printing,
+      .button.done {
         background: #ffffff;
         color: #000000;
-    }
-
-    .button.done {
-        background: #ffffff;
-        color: #000000;
-    }
+      }
 
     ::-webkit-scrollbar {
         width: 5px;
