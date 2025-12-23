@@ -2,7 +2,7 @@ window.function = function (html, format) {
 
   // ==== WAJIB ====
   html = html?.value ?? "No HTML set.";
-  format = format?.value ?? "3";
+  format = format?.value ?? "1";
 
   // ==== FORMAT DIMENSI ====
   const formatDimensions = {
